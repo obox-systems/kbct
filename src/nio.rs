@@ -26,7 +26,7 @@ pub enum ObserverResult {
 }
 
 impl EventLoop {
-	pub(crate) fn new() -> Result<EventLoop> {
+	pub fn new() -> Result<EventLoop> {
 		Ok(EventLoop {
 			events: Events::with_capacity(EVENTS_CAPACITY),
 			registrar: EventLoopRegistrar {
@@ -38,7 +38,7 @@ impl EventLoop {
 		})
 	}
 
-	pub(crate) fn run(&mut self) -> Result<()> {
+	pub fn run(&mut self) -> Result<()> {
 		while self.registrar.running {
 			match self.registrar.poll.poll(&mut self.events, None) {
 				Ok(_) => (),
