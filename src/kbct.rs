@@ -1,6 +1,3 @@
-#[macro_use]
-extern crate maplit;
-
 use std::cmp::Ordering;
 use std::collections::{BTreeSet, HashMap};
 use std::slice::Iter;
@@ -194,7 +191,7 @@ impl Kbct {
 			simple_map,
 			complex_map,
 			source_to_mapped: LinkedHashMap::new(),
-			mapped_to_source: hashmap!(),
+			mapped_to_source: maplit::hashmap!(),
 			transient_modifiers: Default::default(),
 			logic_clock: 0,
 		})
@@ -270,8 +267,8 @@ impl Kbct {
 
 	pub fn map_event(&mut self, ev: KbctEvent) -> Vec<KbctEvent> {
 		use KbctKeyStatus::*;
-		let empty_map = hashmap!();
-		let empty_set = btreeset!();
+		let empty_map = maplit::hashmap!();
+		let empty_set = maplit::btreeset!();
 
 		let not_mapped = KeyPress {
 			code: ev.code,
@@ -285,7 +282,7 @@ impl Kbct {
 		let mut is_complex = true;
 		let complex_mapped = complex_keymap.get(&ev.code).unwrap_or_else(|| {
 			is_complex = false;
-			&simple_mapped
+			simple_mapped
 		});
 
 		let prev_state = self.source_to_mapped.get(&ev.code);

@@ -11,7 +11,7 @@ use std::{fs, fs::File, process, thread, time};
 use std::collections::{HashMap, HashSet};
 use std::os::unix::io::{AsRawFd, RawFd};
 
-use clap::Clap;
+use clap::Parser;
 use inotify::Inotify;
 use log::LevelFilter;
 use mio::event::Event;
@@ -22,7 +22,7 @@ use regex::Regex;
 use uinput::Device;
 use uinput_sys::*;
 
-use kbct::*;
+use lib_kbct::*;
 use nio::*;
 
 struct SignalReceiver {
@@ -306,7 +306,7 @@ fn log_keys(device: String) -> Result<()> {
 	Ok(())
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct CliRoot {
 	#[clap(subcommand)]
 	subcmd: SubCommand,
@@ -314,7 +314,7 @@ struct CliRoot {
 	debug_log: bool,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 enum SubCommand {
 	#[clap()]
 	TestReplay(CliTestReplay),
@@ -326,7 +326,7 @@ enum SubCommand {
 	LogKeys(LogKeys),
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct CliTestReplay {
 	#[clap(short, long)]
 	testcase: String,
@@ -334,19 +334,19 @@ struct CliTestReplay {
 	device_name: String
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct CliRemap {
 	#[clap(short, long)]
 	config: String,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct LogKeys {
 	#[clap(short, long)]
 	device_path: String,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 struct ListDevices {}
 
 fn main() -> Result<()> {

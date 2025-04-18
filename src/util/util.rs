@@ -1,7 +1,7 @@
 use std::fs;
 
-use kbct::Result;
-use kbct::{KbctError, KbctEvent, KbctKeyStatus};
+use crate::kbct::Result;
+use crate::kbct::{KbctError, KbctEvent, KbctKeyStatus};
 use uinput::Device;
 
 extern crate text_io;
@@ -63,7 +63,7 @@ fn insert_device_name_path_pair(map: &mut HashMap<String, String>, name: String,
 pub fn get_all_uinput_device_names_to_paths() -> Result<HashMap<String, String>> {
 	let paths = fs::read_dir("/dev/input/")?;
 	let regex: Regex = Regex::new("^.*event\\d+$")?;
-	let mut ans = hashmap![];
+	let mut ans = maplit::hashmap![];
 	for path in paths {
 		let path_buf = path?.path();
 		let device_path = path_buf.to_string_lossy();

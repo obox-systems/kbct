@@ -2,8 +2,8 @@ use crate::util::keycodes::*;
 use crate::util::*;
 use crate::util::{KeyEvent, KeyMapEvent};
 use core::time;
-use kbct::KbctError;
-use kbct::Result;
+use crate::kbct::KbctError;
+use crate::kbct::Result;
 use mio::unix::SourceFd;
 use mio::{Interest, Token};
 use regex::Regex;
@@ -169,7 +169,7 @@ pub fn replay(test_file: String, device_name: String) -> Result<()> {
 		}
 	}
 	send_wait_for_assert.send(Finish).unwrap();
-	info!("Test passed");
+	log::info!("Test passed");
 
 	match thread.join() {
 		Ok(_) => Ok(()),

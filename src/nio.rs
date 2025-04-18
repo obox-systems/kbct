@@ -1,9 +1,8 @@
-use kbct::Result;
+use crate::kbct::Result;
 use mio::event::{Event, Source};
 use mio::unix::SourceFd;
 use mio::{Events, Interest, Poll, Token};
 use std::collections::HashMap;
-use std::io;
 
 const EVENTS_CAPACITY: usize = 1024;
 
@@ -48,7 +47,7 @@ impl EventLoop {
 						println!("Ignoring error: {}", e);
 						continue;
 					}
-					_ => return Err(kbct::KbctError::IOError(e)),
+					_ => return Err(crate::kbct::KbctError::IOError(e)),
 				},
 			}
 			for ev in self.events.iter() {
